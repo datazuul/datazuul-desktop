@@ -1,7 +1,7 @@
-package com.datazuul.apps.desktop.applications;
+package com.datazuul.apps.desktop.applications.email;
 
 /*
- * @(#)StoreTreeNode.java	1.9 01/05/23
+ * @(#)FolderTreeNode.java	1.8 01/05/23
  *
  * Copyright 1997-2000 Sun Microsystems, Inc. All Rights Reserved.
  *
@@ -39,62 +39,76 @@ package com.datazuul.apps.desktop.applications;
  */
 
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.mail.*;
+import javax.mail.Store;
+import javax.mail.Folder;
+import javax.mail.MessagingException;
 
 /**
- * Node which represents a Store in the javax.mail apis. 
+ * Node which represents a Folder in the javax.mail apis. 
  *
- * @version 1.9, 01/05/23
+ * @version 1.8, 01/05/23
  * @author Christopher Cotton
  */
-public class StoreTreeNode extends DefaultMutableTreeNode {
+public class FolderTreeNode extends DefaultMutableTreeNode {
     
-    protected Store	store = null;
     protected Folder	folder = null;
-    protected String	display = null;
+    protected boolean	hasLoaded = false;
 
     /**
      * creates a tree node that points to the particular Store.
      *
      * @param what	the store for this node
      */
-    public StoreTreeNode(Store what) {
+    public FolderTreeNode(Folder what) {
 	super(what);
-	store = what;
+	folder = what;
     }
 
     
     /**
-     * a Store is never a leaf node.  It can always contain stuff
+     * a Folder is a leaf if it cannot contain sub folders
      */
     public boolean isLeaf() {
+	try {
+	    if ((folder.getType() & Folder.HOLDS_FOLDERS) == 0)
+	    	return true;
+	} catch (MessagingException me) { }
+	
+	// otherwise it does hold folders, and therefore not
+	// a leaf
 	return false;
     }
    
+    /**
+     * returns the folder for this node
+     */
+    public Folder getFolder() {
+	return folder;
+    }
+    
+
 
     /**
-     * return the number of children for this store node. The first
+     * return the number of children for this folder node. The first
      * time this method is called we load up all of the folders
      * under the store's defaultFolder
      */
 
     public int getChildCount() {
-	if (folder == null) {
+	if (!hasLoaded) {
 	    loadChildren();
 	}
 	return super.getChildCount();
     }
     
     protected void loadChildren() {
-	try {
-	    // connect to the Store if we need to
-	    if (!store.isConnected()) {
-		store.connect();
-	    }
+	// if it is a leaf, just say we have loaded them
+	if (isLeaf()) {
+	    hasLoaded = true;
+	    return;
+	}
 
-	    // get the default folder, and list the
-	    // subscribed folders on it
-	    folder = store.getDefaultFolder();
+	try {
 	    // Folder[] sub = folder.listSubscribed();
 	    Folder[] sub = folder.list();
 
@@ -112,27 +126,14 @@ public class StoreTreeNode extends DefaultMutableTreeNode {
 	}
     }
 
-    /**
-     * We override toString() so we can display the store URLName
-     * without the password.
-     */
 
+    /**
+     * override toString() since we only want to display a folder's
+     * name, and not the full path of the folder
+     */
     public String toString() {
-	if (display == null) {
-	    URLName url = store.getURLName();
-	    if (url == null) {
-		display = store.toString();
-	    } else {
-		// don't show the password
-		URLName too = new URLName( url.getProtocol(), url.getHost(), url.getPort(),
-					   url.getFile(), url.getUsername(), null);
-		display = too.toString();
-	    }
-	}
-	
-	return display;
+	return folder.getName();
     }
-    
     
 }
 

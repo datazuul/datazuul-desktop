@@ -1,4 +1,4 @@
-package com.datazuul.apps.desktop.applications;
+package com.datazuul.apps.desktop.applications.email;
 
 /*
  * @(#)SimpleAuthenticator.java	1.7 01/05/23

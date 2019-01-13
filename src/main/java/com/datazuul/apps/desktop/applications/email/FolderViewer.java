@@ -1,4 +1,4 @@
-package com.datazuul.apps.desktop.applications;
+package com.datazuul.apps.desktop.applications.email;
 
 /*
  * @(#)FolderViewer.java	1.12 05/11/16

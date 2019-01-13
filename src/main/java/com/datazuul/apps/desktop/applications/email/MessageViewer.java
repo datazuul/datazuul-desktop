@@ -1,4 +1,4 @@
-package com.datazuul.apps.desktop.applications;
+package com.datazuul.apps.desktop.applications.email;
 
 /*
  * @(#)MessageViewer.java	1.16 01/05/23

@@ -1,4 +1,4 @@
-package com.datazuul.apps.desktop.applications;
+package com.datazuul.apps.desktop.applications.email;
 
 /*
  * @(#)MultipartViewer.java	1.14 01/05/23

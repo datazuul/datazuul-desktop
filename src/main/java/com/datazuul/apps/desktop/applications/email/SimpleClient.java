@@ -1,4 +1,4 @@
-package com.datazuul.apps.desktop.applications;
+package com.datazuul.apps.desktop.applications.email;
 
 /*
  * @(#)SimpleClient.java	1.24 01/05/23

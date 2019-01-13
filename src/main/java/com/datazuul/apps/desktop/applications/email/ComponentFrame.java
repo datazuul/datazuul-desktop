@@ -1,7 +1,7 @@
-package com.datazuul.apps.desktop.applications;
+package com.datazuul.apps.desktop.applications.email;
 
 /*
- * @(#)TextViewer.java	1.12 01/05/23
+ * @(#)ComponentFrame.java	1.8 01/05/23
  *
  * Copyright 1997-2000 Sun Microsystems, Inc. All Rights Reserved.
  *
@@ -39,80 +39,46 @@ package com.datazuul.apps.desktop.applications;
  */
 
 import java.awt.*;
-import java.io.*;
-import java.beans.*;
-import javax.activation.*;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
+import java.awt.event.*;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 
 /**
- * A very simple TextViewer Bean for the MIMEType "text/plain"
+ * this Frame provides a utility class for displaying a single
+ * Component in a Frame.
  *
- * @version	1.12, 01/05/23
+ * @version	1.8, 01/05/23
  * @author	Christopher Cotton
  */
 
-public class TextViewer extends JPanel implements CommandObject 
-{
-
-    private JTextArea text_area = null;
-    private DataHandler dh = null;
-    private String	verb = null;
+public class ComponentFrame extends JFrame {
+    
+    /**
+     * creates the frame
+     * @param what	the component to display
+     */
+    public ComponentFrame(Component what) {
+	this(what, "Component Frame");
+    }
 
     /**
-     * Constructor
+     * creates the frame with the given name
+     * @param what	the component to display
+     * @param name	the name of the Frame
      */
-    public TextViewer() {
-	super(new GridLayout(1,1));
+    public ComponentFrame(Component what, String name) {
+	super(name);
 
-	// create the text area
-	text_area = new JTextArea();
-	text_area.setEditable(false);
-	text_area.setLineWrap(true);
+	// make sure that we close and dispose ourselves when needed
+	setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-	// create a scroll pane for the JTextArea
-	JScrollPane sp = new JScrollPane();
-	sp.setPreferredSize(new Dimension(300, 300));
-	sp.getViewport().add(text_area);
-	
-	add(sp);
-    }
+	// default size of the frame
+	setSize(700,600);
 
-
-    public void setCommandContext(String verb, DataHandler dh)
-	throws IOException {
-
-	this.verb = verb;
-	this.dh = dh;
-	
-	this.setInputStream( dh.getInputStream() );
-    }
-
-
-  /**
-   * set the data stream, component to assume it is ready to
-   * be read.
-   */
-  public void setInputStream(InputStream ins) {
-      
-      int bytes_read = 0;
-      // check that we can actually read
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      byte data[] = new byte[1024];
-      
-      try {
-	  while((bytes_read = ins.read(data)) >0)
-		  baos.write(data, 0, bytes_read);
-	  ins.close();
-      } catch(Exception e) {
-	  e.printStackTrace();
-      }
-
-      // convert the buffer into a string
-      // place in the text area
-      text_area.setText(baos.toString());
-
+	// we want to display just the component in the entire frame
+	if (what != null) {
+	    getContentPane().add("Center", what);
+	}
     }
 }
