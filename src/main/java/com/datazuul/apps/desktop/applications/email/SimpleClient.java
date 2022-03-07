@@ -75,7 +75,7 @@ public class SimpleClient {
     public static void main(String argv[]) {
 	boolean usage = false;
 
-        url.addElement("imap://emil.eichinger03@gmail.com:test@gmail.com/");
+        url.addElement("imap://ralf.eichinger@gmail.com:test@gmail.com/");
 //	for (int optind = 0; optind < argv.length; optind++) {
 //	    if (argv[optind].equals("-L")) {
 //		url.addElement(argv[++optind]);

@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.1.RELEASE</version>
+    <version>2.6.4</version>
   </parent>
   
-  <name>datazuul.com - DataZuul Applications: Desktop</name>
+  <name>datazuul applications: Java Desktop</name>
   <groupId>com.datazuul.apps</groupId>
   <artifactId>datazuul-desktop</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -20,14 +20,13 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
       <groupId>javax.mail</groupId>
       <artifactId>mail</artifactId>
       <version>1.4.4</version>
-      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
     </dependency>
   </dependencies>
 
