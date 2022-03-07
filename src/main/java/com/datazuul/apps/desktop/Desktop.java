@@ -44,6 +44,14 @@ public class Desktop extends JFrame implements ActionListener {
     pane.setAlignmentY(TOP_ALIGNMENT); // FIXME: How to align components on top of JPanel?
     getContentPane().add(pane, BorderLayout.WEST);
 
+    // MAYBE tihs ist the solution? test it:
+    //    setLayout( new BorderLayout() );
+    //GridBagLayout gridbag = new GridBagLayout();
+    //JPanel frame = new JPanel(gridbag);
+    //add(panel, BorderLayout.NORTH );
+    //
+    //frame.add( ... ); // add your GridBagLayout Components to frame to align them to top
+
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.anchor = GridBagConstraints.NORTH; // FIXME: How to align components on top of JPanel?
     gbc.fill = GridBagConstraints.HORIZONTAL;
